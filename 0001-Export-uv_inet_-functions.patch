@@ -1,0 +1,27 @@
+From fcd8668e5f89ac8afe7e3e2cafe4bc2da0fd000e Mon Sep 17 00:00:00 2001
+From: Stephen Gallagher <sgallagh@redhat.com>
+Date: Thu, 15 Nov 2012 12:04:11 -0500
+Subject: [PATCH] Export uv_inet_* functions
+
+---
+ include/uv.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/include/uv.h b/include/uv.h
+index 9d80d9a186810532f862642dbc8f09c13fbb69ef..7f3bc589a55ff41eef6b25083b9a9d25ef4c436a 100644
+--- a/include/uv.h
++++ b/include/uv.h
+@@ -1701,8 +1701,8 @@ UV_EXTERN int uv_ip6_name(struct sockaddr_in6* src, char* dst, size_t size);
+ /* Cross-platform IPv6-capable implementation of the 'standard' inet_ntop */
+ /* and inet_pton functions. On success they return UV_OK. If an error */
+ /* the target of the `dst` pointer is unmodified. */
+-uv_err_t uv_inet_ntop(int af, const void* src, char* dst, size_t size);
+-uv_err_t uv_inet_pton(int af, const char* src, void* dst);
++UV_EXTERN uv_err_t uv_inet_ntop(int af, const void* src, char* dst, size_t size);
++UV_EXTERN uv_err_t uv_inet_pton(int af, const char* src, void* dst);
+ 
+ /* Gets the executable path */
+ UV_EXTERN int uv_exepath(char* buffer, size_t* size);
+-- 
+1.8.0
+
