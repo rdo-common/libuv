@@ -2,7 +2,7 @@
 
 Name: libuv
 Version: 0.9.3
-Release: 0.2.git%{git_snapshot}%{?dist}
+Release: 0.3.git%{git_snapshot}%{?dist}
 Summary: Platform layer for node.js
 
 Group: Development/Tools
@@ -23,6 +23,9 @@ Requires(postun): /sbin/ldconfig
 # https://fedorahosted.org/fpc/ticket/231
 Provides: bundled(libev) = 4.04
 
+# Properly export missing function
+Patch0001: 0001-Export-uv_inet_-functions.patch
+
 %description
 libuv is a new platform layer for Node. Its purpose is to abstract IOCP on
 Windows and libev on Unix systems. We intend to eventually contain all platform
@@ -42,6 +45,7 @@ Development libraries for libuv
 %prep
 %setup -q
 
+%patch0001 -p1
 
 %build
 ./gyp_uv -Dcomponent=shared_library -Dlibrary=shared_library
@@ -112,6 +116,9 @@ sed -e "s#@prefix@#%{_prefix}#g" \
 %{_includedir}/uv-private
 
 %changelog
+* Thu Nov 15 2012 Stephen Gallagher <sgallagh@redhat.com> - 0.9.3-0.3.git09b0222
+- Add patch to export uv_inet_*
+
 * Wed Nov 14 2012 Stephen Gallagher <sgallagh@redhat.com> - 0.9.3-0.2.git09b0222
 - Fixes from package review
 - Removed doubly-listed include directory
