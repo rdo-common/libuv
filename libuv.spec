@@ -1,8 +1,8 @@
-%global git_snapshot 09b0222
+%global git_snapshot dc559a5
 
 Name: libuv
-Version: 0.9.3
-Release: 0.3.git%{git_snapshot}%{?dist}
+Version: 0.9.4
+Release: 0.1.git%{git_snapshot}%{?dist}
 Summary: Platform layer for node.js
 
 Group: Development/Tools
@@ -23,9 +23,6 @@ Requires(postun): /sbin/ldconfig
 # https://fedorahosted.org/fpc/ticket/231
 Provides: bundled(libev) = 4.04
 
-# Properly export missing function
-Patch0001: 0001-Export-uv_inet_-functions.patch
-
 %description
 libuv is a new platform layer for Node. Its purpose is to abstract IOCP on
 Windows and libev on Unix systems. We intend to eventually contain all platform
@@ -45,9 +42,9 @@ Development libraries for libuv
 %prep
 %setup -q
 
-%patch0001 -p1
-
 %build
+export CFLAGS='%{optflags}'
+export CXXFLAGS='%{optflags}'
 ./gyp_uv -Dcomponent=shared_library -Dlibrary=shared_library
 
 # Modify the build so it produces a versioned shared library
@@ -77,8 +74,7 @@ mkdir -p %{buildroot}/%{_includedir}/uv-private
 cp %{_builddir}/%{name}-%{version}/include/uv.h \
    %{buildroot}/%{_includedir}
 
-cp %{_builddir}/%{name}-%{version}/include/uv-private/ev.h \
-   %{_builddir}/%{name}-%{version}/include/uv-private/ev-proto.h \
+cp \
    %{_builddir}/%{name}-%{version}/include/uv-private/ngx-queue.h \
    %{_builddir}/%{name}-%{version}/include/uv-private/tree.h \
    %{_builddir}/%{name}-%{version}/include/uv-private/uv-linux.h \
@@ -116,6 +112,11 @@ sed -e "s#@prefix@#%{_prefix}#g" \
 %{_includedir}/uv-private
 
 %changelog
+* Wed Dec 26 2012 T.C. Hollingsworth <tchollingsworth@gmail.com> - 0.9.4-0.1.gitdc559a5
+- bump to version included with node 0.9.4
+- drop upstreamed patch
+- respect optflags
+
 * Thu Nov 15 2012 Stephen Gallagher <sgallagh@redhat.com> - 0.9.3-0.3.git09b0222
 - Add patch to export uv_inet_*
 
