@@ -1,8 +1,8 @@
-%global git_snapshot dc559a5
+%global git_snapshot 4ba03dd
 
 Name: libuv
-Version: 0.9.4
-Release: 0.1.git%{git_snapshot}%{?dist}
+Version: 0.9.7
+Release: 1.git%{git_snapshot}%{?dist}
 Summary: Platform layer for node.js
 
 Group: Development/Tools
@@ -112,6 +112,9 @@ sed -e "s#@prefix@#%{_prefix}#g" \
 %{_includedir}/uv-private
 
 %changelog
+* Tue Jan 22 2013 Stephen Gallagher <sgallagh@redhat.com> - 0.9.7-1.git4ba03dd
+- Bump to version included with Node.js 0.9.7
+
 * Wed Dec 26 2012 T.C. Hollingsworth <tchollingsworth@gmail.com> - 0.9.4-0.1.gitdc559a5
 - bump to version included with node 0.9.4
 - drop upstreamed patch
