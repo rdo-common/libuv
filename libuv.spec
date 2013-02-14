@@ -2,7 +2,7 @@
 
 Name: libuv
 Version: 0.9.7
-Release: 1.git%{git_snapshot}%{?dist}
+Release: 2.git%{git_snapshot}%{?dist}
 Summary: Platform layer for node.js
 
 Group: Development/Tools
@@ -112,6 +112,9 @@ sed -e "s#@prefix@#%{_prefix}#g" \
 %{_includedir}/uv-private
 
 %changelog
+* Thu Feb 14 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.9.7-2.git4ba03dd
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_19_Mass_Rebuild
+
 * Tue Jan 22 2013 Stephen Gallagher <sgallagh@redhat.com> - 0.9.7-1.git4ba03dd
 - Bump to version included with Node.js 0.9.7
 
