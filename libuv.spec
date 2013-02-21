@@ -1,8 +1,8 @@
-%global git_snapshot 4ba03dd
+%global git_snapshot dc559a5
 
 Name: libuv
-Version: 0.9.7
-Release: 2.git%{git_snapshot}%{?dist}
+Version: 0.9.4
+Release: 3.git%{git_snapshot}%{?dist}
 Summary: Platform layer for node.js
 
 Group: Development/Tools
@@ -112,6 +112,9 @@ sed -e "s#@prefix@#%{_prefix}#g" \
 %{_includedir}/uv-private
 
 %changelog
+* Thu Feb 21 2013 Stephen Gallagher <sgallagh@redhat.com> - 0.9.4-3.gitdc559a5
+- Revert to version 0.9.4 (since 0.9.7 is breaking builds)
+
 * Thu Feb 14 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.9.7-2.git4ba03dd
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_19_Mass_Rebuild
 
