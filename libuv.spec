@@ -1,8 +1,9 @@
 %global git_snapshot dc559a5
 
 Name: libuv
+Epoch:   1
 Version: 0.9.4
-Release: 3.git%{git_snapshot}%{?dist}
+Release: 4.git%{git_snapshot}%{?dist}
 Summary: Platform layer for node.js
 
 Group: Development/Tools
@@ -31,7 +32,7 @@ differences in this library.
 %package devel
 Summary: Development libraries for libuv
 Group: Development/Tools
-Requires: %{name} = %{version}-%{release}
+Requires: %{name} = %{epoch}:%{version}-%{release}
 Requires: pkgconfig
 Requires(post): /sbin/ldconfig
 Requires(postun): /sbin/ldconfig
@@ -112,6 +113,11 @@ sed -e "s#@prefix@#%{_prefix}#g" \
 %{_includedir}/uv-private
 
 %changelog
+* Thu Feb 28 2013 Stephen Gallagher <sgallagh@redhat.com> - 1:0.9.4-4.gitdc559a5
+- Bump epoch for the version downgrade
+- The 0.9.7 version hit the Rawhide repo due to the mass rebuild, we need a
+  clean upgrade path.
+
 * Thu Feb 21 2013 Stephen Gallagher <sgallagh@redhat.com> - 0.9.4-3.gitdc559a5
 - Revert to version 0.9.4 (since 0.9.7 is breaking builds)
 
