@@ -1,9 +1,9 @@
-%global git_snapshot dc559a5
+%global git_snapshot 5462dab
 
 Name: libuv
 Epoch:   1
-Version: 0.9.4
-Release: 4.git%{git_snapshot}%{?dist}
+Version: 0.10.0
+Release: 1.git%{git_snapshot}%{?dist}
 Summary: Platform layer for node.js
 
 Group: Development/Tools
@@ -113,6 +113,9 @@ sed -e "s#@prefix@#%{_prefix}#g" \
 %{_includedir}/uv-private
 
 %changelog
+* Mon Mar 11 2013 Stephen Gallagher <sgallagh@redhat.com> - 1:0.10.0-1.git5462dab
+- Upgrade to 0.10.0 release to match stable Node.js release
+
 * Thu Feb 28 2013 Stephen Gallagher <sgallagh@redhat.com> - 1:0.9.4-4.gitdc559a5
 - Bump epoch for the version downgrade
 - The 0.9.7 version hit the Rawhide repo due to the mass rebuild, we need a
