@@ -1,9 +1,13 @@
 %global git_snapshot 5462dab
 
+#we only need major.minor in the SONAME in the stable (even numbered) series
+#this should be changed to %%{version} in unstable (odd numbered) releases
+%global sover 0.10
+
 Name: libuv
 Epoch:   1
 Version: 0.10.0
-Release: 1.git%{git_snapshot}%{?dist}
+Release: 2.git%{git_snapshot}%{?dist}
 Summary: Platform layer for node.js
 
 Group: Development/Tools
@@ -51,11 +55,11 @@ export CXXFLAGS='%{optflags}'
 # Modify the build so it produces a versioned shared library
 pushd out
 mv libuv.target.mk libuv.target.mk.orig
-sed "s/libuv.so/libuv.so.%{version}/g" libuv.target.mk.orig > libuv.target.mk
+sed "s/libuv.so/libuv.so.%{sover}/g" libuv.target.mk.orig > libuv.target.mk
 mv run-benchmarks.target.mk run-benchmarks.target.mk.orig
-sed "s/libuv.so/libuv.so.%{version}/g" run-benchmarks.target.mk.orig > run-benchmarks.target.mk
+sed "s/libuv.so/libuv.so.%{sover}/g" run-benchmarks.target.mk.orig > run-benchmarks.target.mk
 mv run-tests.target.mk run-tests.target.mk.orig
-sed "s/libuv.so/libuv.so.%{version}/g" run-tests.target.mk.orig > run-tests.target.mk
+sed "s/libuv.so/libuv.so.%{sover}/g" run-tests.target.mk.orig > run-tests.target.mk
 popd
 
 make %{?_smp_mflags} V=1 -C out BUILDTYPE=Release
@@ -63,10 +67,10 @@ make %{?_smp_mflags} V=1 -C out BUILDTYPE=Release
 %install
 # Copy the shared lib into the libdir
 mkdir -p %{buildroot}/%{_libdir}/
-cp out/Release/obj.target/libuv.so.%{version} %{buildroot}/%{_libdir}/libuv.so.%{version}
+cp out/Release/obj.target/libuv.so.%{sover} %{buildroot}/%{_libdir}/libuv.so.%{sover}
 pushd %{buildroot}/%{_libdir}/
-ln -s libuv.so.%{version} libuv.so.0
-ln -s libuv.so.%{version} libuv.so
+ln -s libuv.so.%{sover} libuv.so.0
+ln -s libuv.so.%{sover} libuv.so
 popd
 
 # Copy the headers into the include path
@@ -113,6 +117,10 @@ sed -e "s#@prefix@#%{_prefix}#g" \
 %{_includedir}/uv-private
 
 %changelog
+* Tue Mar 12 2013 T.C. Hollingsworth <tchollingsworth@gmail.com> - 1:0.10.0-2.git5462dab
+- drop the patchlevel from the SONAME since libuv will retain binary
+  compatibility for the life of the 0.10.x series
+
 * Mon Mar 11 2013 Stephen Gallagher <sgallagh@redhat.com> - 1:0.10.0-1.git5462dab
 - Upgrade to 0.10.0 release to match stable Node.js release
 
