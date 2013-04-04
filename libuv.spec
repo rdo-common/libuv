@@ -7,7 +7,7 @@
 Name: libuv
 Epoch:   1
 Version: 0.10.3
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: Platform layer for node.js
 
 Group: Development/Tools
@@ -15,6 +15,10 @@ License: MIT
 URL: http://nodejs.org/
 Source0: http://libuv.org/dist/v%{version}/%{name}-v%{version}.tar.gz
 Source2: libuv.pc.in
+
+# backport fix to FTBFS in nodejs-0.10.3
+# https://github.com/joyent/node/issues/5213
+Patch0001: 0001-unix-include-uv.h-in-src-version.c.patch
 
 BuildRequires: gyp
 Requires(post): /sbin/ldconfig
@@ -42,6 +46,7 @@ Development libraries for libuv
 
 %prep
 %setup -q -n %{name}-v%{version}
+%patch0001 -p1
 
 %build
 export CFLAGS='%{optflags}'
@@ -113,6 +118,9 @@ sed -e "s#@prefix@#%{_prefix}#g" \
 %{_includedir}/uv-private
 
 %changelog
+* Thu Apr 04 2013 T.C. Hollingsworth <tchollingsworth@gmail.com> - 1:0.10.3-2
+- backport patch that fixes FTBFS in nodejs-0.10.3
+
 * Sun Mar 31 2013 tchollingsworth@gmail.com - 1:0.10.3-1
 - rebase to 0.10.3
 - upstream now does proper releases
