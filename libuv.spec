@@ -6,8 +6,8 @@
 
 Name: libuv
 Epoch:   1
-Version: 0.10.3
-Release: 2%{?dist}
+Version: 0.10.4
+Release: 1%{?dist}
 Summary: Platform layer for node.js
 
 Group: Development/Tools
@@ -118,6 +118,9 @@ sed -e "s#@prefix@#%{_prefix}#g" \
 %{_includedir}/uv-private
 
 %changelog
+* Mon Apr 15 2013 T.C. Hollingsworth <tchollingsworth@gmail.com> - 1:0.10.4-1
+- new upstream release 0.10.4
+
 * Thu Apr 04 2013 T.C. Hollingsworth <tchollingsworth@gmail.com> - 1:0.10.3-2
 - backport patch that fixes FTBFS in nodejs-0.10.3
 
