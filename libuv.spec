@@ -16,10 +16,6 @@ URL: http://nodejs.org/
 Source0: http://libuv.org/dist/v%{version}/%{name}-v%{version}.tar.gz
 Source2: libuv.pc.in
 
-# backport fix to FTBFS in nodejs-0.10.3
-# https://github.com/joyent/node/issues/5213
-Patch0001: 0001-unix-include-uv.h-in-src-version.c.patch
-
 BuildRequires: gyp
 Requires(post): /sbin/ldconfig
 Requires(postun): /sbin/ldconfig
@@ -46,7 +42,6 @@ Development libraries for libuv
 
 %prep
 %setup -q -n %{name}-v%{version}
-%patch0001 -p1
 
 %build
 export CFLAGS='%{optflags}'
@@ -120,6 +115,7 @@ sed -e "s#@prefix@#%{_prefix}#g" \
 %changelog
 * Mon Apr 15 2013 T.C. Hollingsworth <tchollingsworth@gmail.com> - 1:0.10.4-1
 - new upstream release 0.10.4
+- drop upstreamed patch
 
 * Thu Apr 04 2013 T.C. Hollingsworth <tchollingsworth@gmail.com> - 1:0.10.3-2
 - backport patch that fixes FTBFS in nodejs-0.10.3
