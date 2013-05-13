@@ -7,7 +7,7 @@
 Name: libuv
 Epoch:   1
 Version: 0.10.5
-Release: 2%{?dist}
+Release: 3%{?dist}
 Summary: Platform layer for node.js
 
 Group: Development/Tools
@@ -48,22 +48,12 @@ export CFLAGS='%{optflags}'
 export CXXFLAGS='%{optflags}'
 ./gyp_uv -Dcomponent=shared_library -Dlibrary=shared_library
 
-# Modify the build so it produces a versioned shared library
-pushd out
-mv libuv.target.mk libuv.target.mk.orig
-sed "s/libuv.so/libuv.so.%{sover}/g" libuv.target.mk.orig > libuv.target.mk
-mv run-benchmarks.target.mk run-benchmarks.target.mk.orig
-sed "s/libuv.so/libuv.so.%{sover}/g" run-benchmarks.target.mk.orig > run-benchmarks.target.mk
-mv run-tests.target.mk run-tests.target.mk.orig
-sed "s/libuv.so/libuv.so.%{sover}/g" run-tests.target.mk.orig > run-tests.target.mk
-popd
-
 make %{?_smp_mflags} V=1 -C out BUILDTYPE=Release
 
 %install
 # Copy the shared lib into the libdir
 mkdir -p %{buildroot}/%{_libdir}/
-cp out/Release/obj.target/libuv.so.%{sover} %{buildroot}/%{_libdir}/libuv.so.%{sover}
+cp out/Release/obj.target/libuv.so %{buildroot}/%{_libdir}/libuv.so.%{sover}
 pushd %{buildroot}/%{_libdir}/
 ln -s libuv.so.%{sover} libuv.so.0
 ln -s libuv.so.%{sover} libuv.so
@@ -113,6 +103,9 @@ sed -e "s#@prefix@#%{_prefix}#g" \
 %{_includedir}/uv-private
 
 %changelog
+* Mon May 13 2013 T.C. Hollingsworth <tchollingsworth@gmail.com> - 1:0.10.5-3
+- don't sed the soname in the spec anymore; the patch takes care of it now
+
 * Mon May 13 2013 Stephen Gallagher <sgallagh@redhat.com> - 1:0.10.5-2
 - Add patch to properly report soname version information
   This patch will be included upstream in 0.10.6 and can be dropped then.
