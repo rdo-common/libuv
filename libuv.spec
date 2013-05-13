@@ -7,7 +7,7 @@
 Name: libuv
 Epoch:   1
 Version: 0.10.5
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: Platform layer for node.js
 
 Group: Development/Tools
@@ -16,13 +16,12 @@ URL: http://nodejs.org/
 Source0: http://libuv.org/dist/v%{version}/%{name}-v%{version}.tar.gz
 Source2: libuv.pc.in
 
+# Upstream patch for generating versioned shared object
+Patch0001: 0001-build-set-soname-in-shared-library.patch
+
 BuildRequires: gyp
 Requires(post): /sbin/ldconfig
 Requires(postun): /sbin/ldconfig
-
-# Bundling exception request:
-# https://fedorahosted.org/fpc/ticket/231
-Provides: bundled(libev) = 4.04
 
 %description
 libuv is a new platform layer for Node. Its purpose is to abstract IOCP on
@@ -42,6 +41,7 @@ Development libraries for libuv
 
 %prep
 %setup -q -n %{name}-v%{version}
+%patch0001 -p1
 
 %build
 export CFLAGS='%{optflags}'
@@ -113,6 +113,11 @@ sed -e "s#@prefix@#%{_prefix}#g" \
 %{_includedir}/uv-private
 
 %changelog
+* Mon May 13 2013 Stephen Gallagher <sgallagh@redhat.com> - 1:0.10.5-2
+- Add patch to properly report soname version information
+  This patch will be included upstream in 0.10.6 and can be dropped then.
+- Remove Bundles(ev) as this has not been true since 0.9.5
+
 * Wed Apr 24 2013 T.C. Hollingsworth <tchollingsworth@gmail.com> - 1:0.10.5-1
 - new upstream release 0.10.5
 
