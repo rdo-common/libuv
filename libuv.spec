@@ -1,5 +1,3 @@
-%global git_snapshot 5462dab
-
 #we only need major.minor in the SONAME in the stable (even numbered) series
 #this should be changed to %%{version} in unstable (odd numbered) releases
 %global sover 0.10
@@ -105,6 +103,7 @@ sed -e "s#@prefix@#%{_prefix}#g" \
 %changelog
 * Mon May 13 2013 T.C. Hollingsworth <tchollingsworth@gmail.com> - 1:0.10.5-3
 - don't sed the soname in the spec anymore; the patch takes care of it now
+- drop leftover global define for git revision
 
 * Mon May 13 2013 Stephen Gallagher <sgallagh@redhat.com> - 1:0.10.5-2
 - Add patch to properly report soname version information
