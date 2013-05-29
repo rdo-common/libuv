@@ -1,12 +1,10 @@
-%global git_snapshot 5462dab
-
 #we only need major.minor in the SONAME in the stable (even numbered) series
 #this should be changed to %%{version} in unstable (odd numbered) releases
 %global sover 0.10
 
 Name: libuv
 Epoch:   1
-Version: 0.10.5
+Version: 0.10.7
 Release: 1%{?dist}
 Summary: Platform layer for node.js
 
@@ -19,10 +17,6 @@ Source2: libuv.pc.in
 BuildRequires: gyp
 Requires(post): /sbin/ldconfig
 Requires(postun): /sbin/ldconfig
-
-# Bundling exception request:
-# https://fedorahosted.org/fpc/ticket/231
-Provides: bundled(libev) = 4.04
 
 %description
 libuv is a new platform layer for Node. Its purpose is to abstract IOCP on
@@ -48,22 +42,12 @@ export CFLAGS='%{optflags}'
 export CXXFLAGS='%{optflags}'
 ./gyp_uv -Dcomponent=shared_library -Dlibrary=shared_library
 
-# Modify the build so it produces a versioned shared library
-pushd out
-mv libuv.target.mk libuv.target.mk.orig
-sed "s/libuv.so/libuv.so.%{sover}/g" libuv.target.mk.orig > libuv.target.mk
-mv run-benchmarks.target.mk run-benchmarks.target.mk.orig
-sed "s/libuv.so/libuv.so.%{sover}/g" run-benchmarks.target.mk.orig > run-benchmarks.target.mk
-mv run-tests.target.mk run-tests.target.mk.orig
-sed "s/libuv.so/libuv.so.%{sover}/g" run-tests.target.mk.orig > run-tests.target.mk
-popd
-
 make %{?_smp_mflags} V=1 -C out BUILDTYPE=Release
 
 %install
 # Copy the shared lib into the libdir
 mkdir -p %{buildroot}/%{_libdir}/
-cp out/Release/obj.target/libuv.so.%{sover} %{buildroot}/%{_libdir}/libuv.so.%{sover}
+cp out/Release/obj.target/libuv.so %{buildroot}/%{_libdir}/libuv.so.%{sover}
 pushd %{buildroot}/%{_libdir}/
 ln -s libuv.so.%{sover} libuv.so.0
 ln -s libuv.so.%{sover} libuv.so
@@ -113,6 +97,19 @@ sed -e "s#@prefix@#%{_prefix}#g" \
 %{_includedir}/uv-private
 
 %changelog
+* Wed May 29 2013 T.C. Hollingsworth <tchollingsworth@gmail.com> - 1:0.10.7-1
+- new upstream release 0.10.7
+- drop upstreamed patch from 0.10.5-2
+
+* Mon May 13 2013 T.C. Hollingsworth <tchollingsworth@gmail.com> - 1:0.10.5-3
+- don't sed the soname in the spec anymore; the patch takes care of it now
+- drop leftover global define for git revision
+
+* Mon May 13 2013 Stephen Gallagher <sgallagh@redhat.com> - 1:0.10.5-2
+- Add patch to properly report soname version information
+  This patch will be included upstream in 0.10.6 and can be dropped then.
+- Remove Bundles(ev) as this has not been true since 0.9.5
+
 * Wed Apr 24 2013 T.C. Hollingsworth <tchollingsworth@gmail.com> - 1:0.10.5-1
 - new upstream release 0.10.5
 
