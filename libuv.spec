@@ -5,11 +5,12 @@
 Name: libuv
 Epoch:   1
 Version: 0.10.8
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: Platform layer for node.js
 
 Group: Development/Tools
-License: MIT
+# the licensing breakdown is described in detail in the LICENSE file
+License: MIT and BSD and ISC
 URL: http://nodejs.org/
 Source0: http://libuv.org/dist/v%{version}/%{name}-v%{version}.tar.gz
 Source2: libuv.pc.in
@@ -97,6 +98,9 @@ sed -e "s#@prefix@#%{_prefix}#g" \
 %{_includedir}/uv-private
 
 %changelog
+* Wed May 29 2013 T.C. Hollingsworth <tchollingsworth@gmail.com> - 1:0.10.8-2
+- fix License tag (RHBZ#968226)
+
 * Wed May 29 2013 T.C. Hollingsworth <tchollingsworth@gmail.com> - 1:0.10.8-1
 - new upstream release 0.10.8
 
