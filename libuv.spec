@@ -4,8 +4,8 @@
 
 Name: libuv
 Epoch:   1
-Version: 0.10.5
-Release: 3%{?dist}
+Version: 0.10.7
+Release: 1%{?dist}
 Summary: Platform layer for node.js
 
 Group: Development/Tools
@@ -13,9 +13,6 @@ License: MIT
 URL: http://nodejs.org/
 Source0: http://libuv.org/dist/v%{version}/%{name}-v%{version}.tar.gz
 Source2: libuv.pc.in
-
-# Upstream patch for generating versioned shared object
-Patch0001: 0001-build-set-soname-in-shared-library.patch
 
 BuildRequires: gyp
 Requires(post): /sbin/ldconfig
@@ -39,7 +36,6 @@ Development libraries for libuv
 
 %prep
 %setup -q -n %{name}-v%{version}
-%patch0001 -p1
 
 %build
 export CFLAGS='%{optflags}'
@@ -101,6 +97,10 @@ sed -e "s#@prefix@#%{_prefix}#g" \
 %{_includedir}/uv-private
 
 %changelog
+* Wed May 29 2013 T.C. Hollingsworth <tchollingsworth@gmail.com> - 1:0.10.7-1
+- new upstream release 0.10.7
+- drop upstreamed patch from 0.10.5-2
+
 * Mon May 13 2013 T.C. Hollingsworth <tchollingsworth@gmail.com> - 1:0.10.5-3
 - don't sed the soname in the spec anymore; the patch takes care of it now
 - drop leftover global define for git revision
