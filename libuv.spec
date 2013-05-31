@@ -4,8 +4,8 @@
 
 Name: libuv
 Epoch:   1
-Version: 0.10.8
-Release: 2%{?dist}
+Version: 0.10.9
+Release: 1%{?dist}
 Summary: Platform layer for node.js
 
 Group: Development/Tools
@@ -98,6 +98,9 @@ sed -e "s#@prefix@#%{_prefix}#g" \
 %{_includedir}/uv-private
 
 %changelog
+* Fri May 31 2013 T.C. Hollingsworth <tchollingsworth@gmail.com> - 1:0.10.9-1
+- new upstream release 0.10.9
+
 * Wed May 29 2013 T.C. Hollingsworth <tchollingsworth@gmail.com> - 1:0.10.8-2
 - fix License tag (RHBZ#968226)
 
