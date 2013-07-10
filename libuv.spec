@@ -4,7 +4,7 @@
 
 Name: libuv
 Epoch:   1
-Version: 0.10.11
+Version: 0.10.12
 Release: 1%{?dist}
 Summary: Platform layer for node.js
 
@@ -98,6 +98,9 @@ sed -e "s#@prefix@#%{_prefix}#g" \
 %{_includedir}/uv-private
 
 %changelog
+* Wed Jul 10 2013 T.C. Hollingsworth <tchollingsworth@gmail.com> - 1:0.10.12-1
+- new upstream release 0.10.12
+
 * Wed Jun 19 2013 T.C. Hollingsworth <tchollingsworth@gmail.com> - 1:0.10.11-1
 - new upstream release 0.10.11
 
