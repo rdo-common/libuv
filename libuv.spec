@@ -41,7 +41,7 @@ Development libraries for libuv
 %build
 export CFLAGS='%{optflags}'
 export CXXFLAGS='%{optflags}'
-./gyp_uv -Dcomponent=shared_library -Dlibrary=shared_library
+%{__python} gyp_uv.py -Dcomponent=shared_library -Dlibrary=shared_library
 
 make %{?_smp_mflags} V=1 -C out BUILDTYPE=Release
 
