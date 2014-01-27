@@ -4,7 +4,7 @@
 
 Name: libuv
 Epoch:   1
-Version: 0.10.21
+Version: 0.10.23
 Release: 1%{?dist}
 Summary: Platform layer for node.js
 
@@ -98,6 +98,10 @@ sed -e "s#@prefix@#%{_prefix}#g" \
 %{_includedir}/uv-private
 
 %changelog
+* Mon Jan 27 2014 T.C. Hollingsworth <tchollingsworth@gmail.com> - 1:0.10.23-1
+- new upstream release 0.10.23
+  https://github.com/joyent/libuv/blob/v0.10.23/ChangeLog
+
 * Thu Dec 19 2013 T.C. Hollingsworth <tchollingsworth@gmail.com> - 1:0.10.21-1
 - new upstream release 0.10.21
   https://github.com/joyent/libuv/blob/v0.10.21/ChangeLog
