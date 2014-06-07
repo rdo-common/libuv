@@ -5,7 +5,7 @@
 Name: libuv
 Epoch:   1
 Version: 0.10.27
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: Platform layer for node.js
 
 Group: Development/Tools
@@ -98,6 +98,9 @@ sed -e "s#@prefix@#%{_prefix}#g" \
 %{_includedir}/uv-private
 
 %changelog
+* Sat Jun 07 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1:0.10.27-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
+
 * Fri May 02 2014 T.C. Hollingsworth <tchollingsworth@gmail.com> - 1:0.10.27-1
 - new upstream release 0.10.27
   https://github.com/joyent/libuv/blob/v0.10.27/ChangeLog
