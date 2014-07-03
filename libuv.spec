@@ -5,7 +5,7 @@
 Name: libuv
 Epoch:   1
 Version: 0.10.27
-Release: 2%{?dist}
+Release: 3%{?dist}
 Summary: Platform layer for node.js
 
 Group: Development/Tools
@@ -35,6 +35,14 @@ Requires(postun): /sbin/ldconfig
 %description devel
 Development libraries for libuv
 
+%package static
+Summary: Platform layer for node.js - static library
+Group:   Development/Libraries
+Requires:   %{name}-devel = %{epoch}:%{version}-%{release}
+
+%description static
+Static library (.a) version of libuv.
+
 %prep
 %setup -q -n %{name}-v%{version}
 
@@ -45,10 +53,17 @@ export CXXFLAGS='%{optflags}'
 
 make %{?_smp_mflags} V=1 -C out BUILDTYPE=Release
 
+mv out out-shared
+
+# build a static version for rust
+%{__python} gyp_uv.py
+make %{?_smp_mflags} V=1 -C out BUILDTYPE=Release
+mv out out-static
+
 %install
 # Copy the shared lib into the libdir
 mkdir -p %{buildroot}/%{_libdir}/
-cp out/Release/obj.target/libuv.so %{buildroot}/%{_libdir}/libuv.so.%{sover}
+cp out-shared/Release/obj.target/libuv.so %{buildroot}/%{_libdir}/libuv.so.%{sover}
 pushd %{buildroot}/%{_libdir}/
 ln -s libuv.so.%{sover} libuv.so.0
 ln -s libuv.so.%{sover} libuv.so
@@ -77,6 +92,9 @@ sed -e "s#@prefix@#%{_prefix}#g" \
     -e "s#@version@#%{version}.git%{git_snapshot}#g" \
     %SOURCE2 > %{buildroot}/%{_libdir}/pkgconfig/libuv.pc
 
+#install the static version
+cp out-static/Release/obj.target/libuv.a %{buildroot}/%{_libdir}
+
 %check
 # Tests are currently disabled because some require network access
 # Working with upstream to split these out
@@ -97,7 +115,13 @@ sed -e "s#@prefix@#%{_prefix}#g" \
 %{_includedir}/uv.h
 %{_includedir}/uv-private
 
+%files static
+%{_libdir}/libuv.a
+
 %changelog
+* Thu Jul 03 2014 T.C. Hollingsworth <tchollingsworth@gmail.com> - 1:0.10.27-3
+- build static library for rust (RHBZ#1115975)
+
 * Sat Jun 07 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1:0.10.27-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
 
