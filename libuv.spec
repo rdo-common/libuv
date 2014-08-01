@@ -4,8 +4,8 @@
 
 Name: libuv
 Epoch:   1
-Version: 0.10.27
-Release: 3%{?dist}
+Version: 0.10.28
+Release: 1%{?dist}
 Summary: Platform layer for node.js
 
 Group: Development/Tools
@@ -119,6 +119,10 @@ cp out-static/Release/obj.target/libuv.a %{buildroot}/%{_libdir}
 %{_libdir}/libuv.a
 
 %changelog
+* Fri Aug 01 2014 T.C. Hollingsworth <tchollingsworth@gmail.com> - 1:0.10.28-1
+- new upstream release 0.10.28
+  https://github.com/joyent/libuv/blob/v0.10.28/ChangeLog
+
 * Thu Jul 03 2014 T.C. Hollingsworth <tchollingsworth@gmail.com> - 1:0.10.27-3
 - build static library for rust (RHBZ#1115975)
 
