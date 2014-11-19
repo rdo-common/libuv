@@ -123,6 +123,9 @@ cp out-static/Release/obj.target/libuv.a %{buildroot}/%{_libdir}
 - new upstream release 0.10.29
   https://github.com/joyent/libuv/blob/v0.10.29/ChangeLog
 
+* Sun Aug 17 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1:0.10.28-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_22_Mass_Rebuild
+
 * Fri Aug 01 2014 T.C. Hollingsworth <tchollingsworth@gmail.com> - 1:0.10.28-1
 - new upstream release 0.10.28
   https://github.com/joyent/libuv/blob/v0.10.28/ChangeLog
