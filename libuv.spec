@@ -4,7 +4,7 @@
 
 Name: libuv
 Epoch:   1
-Version: 0.10.28
+Version: 0.10.29
 Release: 1%{?dist}
 Summary: Platform layer for node.js
 
@@ -119,6 +119,10 @@ cp out-static/Release/obj.target/libuv.a %{buildroot}/%{_libdir}
 %{_libdir}/libuv.a
 
 %changelog
+* Wed Nov 19 2014 T.C. Hollingsworth <tchollingsworth@gmail.com> - 1:0.10.29-1
+- new upstream release 0.10.29
+  https://github.com/joyent/libuv/blob/v0.10.29/ChangeLog
+
 * Fri Aug 01 2014 T.C. Hollingsworth <tchollingsworth@gmail.com> - 1:0.10.28-1
 - new upstream release 0.10.28
   https://github.com/joyent/libuv/blob/v0.10.28/ChangeLog
