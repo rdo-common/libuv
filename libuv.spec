@@ -5,7 +5,7 @@
 Name: libuv
 Epoch:   1
 Version: 0.10.33
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: Platform layer for node.js
 
 Group: Development/Tools
@@ -27,7 +27,7 @@ differences in this library.
 %package devel
 Summary: Development libraries for libuv
 Group: Development/Tools
-Requires: %{name} = %{epoch}:%{version}-%{release}
+Requires: %{name}%{?_isa} = %{epoch}:%{version}-%{release}
 Requires: pkgconfig
 Requires(post): /sbin/ldconfig
 Requires(postun): /sbin/ldconfig
@@ -119,6 +119,9 @@ cp out-static/Release/obj.target/libuv.a %{buildroot}/%{_libdir}
 %{_libdir}/libuv.a
 
 %changelog
+* Thu Feb 19 2015 T.C. Hollingsworth <tchollingsworth@gmail.com> - 1:0.10.33-2
+- add missing %%{_?isa} to devel requires of main package
+
 * Thu Feb 19 2015 T.C. Hollingsworth <tchollingsworth@gmail.com> - 1:0.10.33-1
 - new upstream release 0.10.33
   https://github.com/joyent/libuv/blob/v0.10.33/ChangeLog
