@@ -11,7 +11,7 @@ Summary: Platform layer for node.js
 Group: Development/Tools
 # the licensing breakdown is described in detail in the LICENSE file
 License: MIT and BSD and ISC
-URL: http://nodejs.org/
+URL: http://libuv.org/
 Source0: http://libuv.org/dist/v%{version}/%{name}-v%{version}.tar.gz
 Source2: libuv.pc.in
 
@@ -122,6 +122,7 @@ cp out-static/Release/obj.target/libuv.a %{buildroot}/%{_libdir}
 * Thu Feb 19 2015 T.C. Hollingsworth <tchollingsworth@gmail.com> - 1:0.10.33-1
 - new upstream release 0.10.33
   https://github.com/joyent/libuv/blob/v0.10.33/ChangeLog
+- update URL to point to the new libuv.org
 
 * Wed Nov 19 2014 T.C. Hollingsworth <tchollingsworth@gmail.com> - 1:0.10.29-1
 - new upstream release 0.10.29
