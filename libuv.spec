@@ -8,7 +8,7 @@ Version: 0.10.33
 Release: 2%{?dist}
 Summary: Platform layer for node.js
 
-Group: Development/Tools
+Group: System Environment/Libraries
 # the licensing breakdown is described in detail in the LICENSE file
 License: MIT and BSD and ISC
 URL: http://libuv.org/
@@ -26,7 +26,7 @@ differences in this library.
 
 %package devel
 Summary: Development libraries for libuv
-Group: Development/Tools
+Group: Development/Libraries
 Requires: %{name}%{?_isa} = %{epoch}:%{version}-%{release}
 Requires: pkgconfig
 Requires(post): /sbin/ldconfig
@@ -89,7 +89,7 @@ sed -e "s#@prefix@#%{_prefix}#g" \
     -e "s#@exec_prefix@#%{_exec_prefix}#g" \
     -e "s#@libdir@#%{_libdir}#g" \
     -e "s#@includedir@#%{_includedir}#g" \
-    -e "s#@version@#%{version}.git%{git_snapshot}#g" \
+    -e "s#@version@#%{version}#g" \
     %SOURCE2 > %{buildroot}/%{_libdir}/pkgconfig/libuv.pc
 
 #install the static version
@@ -121,6 +121,7 @@ cp out-static/Release/obj.target/libuv.a %{buildroot}/%{_libdir}
 %changelog
 * Thu Feb 19 2015 T.C. Hollingsworth <tchollingsworth@gmail.com> - 1:0.10.33-2
 - add missing %%{_?isa} to devel requires of main package
+- fix some issues with the pkgconfig file and Group reported by Michael Schwendt
 
 * Thu Feb 19 2015 T.C. Hollingsworth <tchollingsworth@gmail.com> - 1:0.10.33-1
 - new upstream release 0.10.33

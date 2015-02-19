@@ -7,5 +7,5 @@ Name: libuv
 Description: Development libraries for libuv
 Version: @version@
 Libs: -L${libdir} -luv -lrt -ldl
-Cflags:
-URL: http://nodejs.org/
+Cflags: -I{includedir}
+URL: http://libuv.org/
