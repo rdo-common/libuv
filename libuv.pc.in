@@ -6,6 +6,6 @@ includedir=@includedir@
 Name: libuv
 Description: Development libraries for libuv
 Version: @version@
-Libs: -L${libdir} -luv -lrt -ldl
+Libs: -L${libdir} -luv -lrt -lpthread -lnsl -ldl
 Cflags: -I{includedir}
 URL: http://libuv.org/

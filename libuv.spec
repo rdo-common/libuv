@@ -4,8 +4,8 @@
 
 Name: libuv
 Epoch:   1
-Version: 0.10.33
-Release: 2%{?dist}
+Version: 1.4.0
+Release: 1%{?dist}
 Summary: Platform layer for node.js
 
 Group: System Environment/Libraries
@@ -15,7 +15,7 @@ URL: http://libuv.org/
 Source0: http://libuv.org/dist/v%{version}/%{name}-v%{version}.tar.gz
 Source2: libuv.pc.in
 
-BuildRequires: gyp
+BuildRequires: autoconf automake libtool
 Requires(post): /sbin/ldconfig
 Requires(postun): /sbin/ldconfig
 
@@ -47,53 +47,13 @@ Static library (.a) version of libuv.
 %setup -q -n %{name}-v%{version}
 
 %build
-export CFLAGS='%{optflags}'
-export CXXFLAGS='%{optflags}'
-%{__python} gyp_uv.py -Dcomponent=shared_library -Dlibrary=shared_library
-
-make %{?_smp_mflags} V=1 -C out BUILDTYPE=Release
-
-mv out out-shared
-
-# build a static version for rust
-%{__python} gyp_uv.py
-make %{?_smp_mflags} V=1 -C out BUILDTYPE=Release
-mv out out-static
+./autogen.sh
+%configure
+make %{?_smp_mflags}
 
 %install
-# Copy the shared lib into the libdir
-mkdir -p %{buildroot}/%{_libdir}/
-cp out-shared/Release/obj.target/libuv.so %{buildroot}/%{_libdir}/libuv.so.%{sover}
-pushd %{buildroot}/%{_libdir}/
-ln -s libuv.so.%{sover} libuv.so.0
-ln -s libuv.so.%{sover} libuv.so
-popd
-
-# Copy the headers into the include path
-mkdir -p %{buildroot}/%{_includedir}/uv-private
-
-cp include/uv.h \
-   %{buildroot}/%{_includedir}
-
-cp \
-   include/uv-private/ngx-queue.h \
-   include/uv-private/tree.h \
-   include/uv-private/uv-linux.h \
-   include/uv-private/uv-unix.h \
-   %{buildroot}/%{_includedir}/uv-private
-
-# Create the pkgconfig file
-mkdir -p %{buildroot}/%{_libdir}/pkgconfig
-
-sed -e "s#@prefix@#%{_prefix}#g" \
-    -e "s#@exec_prefix@#%{_exec_prefix}#g" \
-    -e "s#@libdir@#%{_libdir}#g" \
-    -e "s#@includedir@#%{_includedir}#g" \
-    -e "s#@version@#%{version}#g" \
-    %SOURCE2 > %{buildroot}/%{_libdir}/pkgconfig/libuv.pc
-
-#install the static version
-cp out-static/Release/obj.target/libuv.a %{buildroot}/%{_libdir}
+make DESTDIR=%{buildroot} install
+rm -f %{buildroot}%{_libdir}/libuv.la
 
 %check
 # Tests are currently disabled because some require network access
@@ -112,13 +72,15 @@ cp out-static/Release/obj.target/libuv.a %{buildroot}/%{_libdir}
 %doc README.md AUTHORS LICENSE
 %{_libdir}/libuv.so
 %{_libdir}/pkgconfig/libuv.pc
-%{_includedir}/uv.h
-%{_includedir}/uv-private
+%{_includedir}/uv*.h
 
 %files static
 %{_libdir}/libuv.a
 
 %changelog
+* Thu Feb 19 2015 T.C. Hollingsworth <tchollingsworth@gmail.com> - 1:1.4.0-1
+- rebase to 1.4.0
+
 * Thu Feb 19 2015 T.C. Hollingsworth <tchollingsworth@gmail.com> - 1:0.10.33-2
 - add missing %%{_?isa} to devel requires of main package
 - fix some issues with the pkgconfig file and Group reported by Michael Schwendt
