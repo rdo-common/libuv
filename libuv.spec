@@ -1,11 +1,8 @@
-#we only need major.minor in the SONAME in the stable (even numbered) series
-#this should be changed to %%{version} in unstable (odd numbered) releases
-%global sover 0.10
 
 Name: libuv
 Epoch:   1
-Version: 1.4.0
-Release: 2%{?dist}
+Version: 1.7.5
+Release: 1%{?dist}
 Summary: Platform layer for node.js
 
 Group: System Environment/Libraries
@@ -78,6 +75,9 @@ rm -f %{buildroot}%{_libdir}/libuv.la
 %{_libdir}/libuv.a
 
 %changelog
+* Tue Dec 01 2015 Stephen Gallagher <sgallagh@redhat.com> 1.7.5-1
+- Rebase to 1.7.5 to support Node.js 4.2
+
 * Wed Jun 17 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1:1.4.0-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
 
