@@ -2,7 +2,7 @@
 Name: libuv
 Epoch:   1
 Version: 1.7.5
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: Platform layer for node.js
 
 Group: System Environment/Libraries
@@ -75,6 +75,9 @@ rm -f %{buildroot}%{_libdir}/libuv.la
 %{_libdir}/libuv.a
 
 %changelog
+* Thu Feb 04 2016 Fedora Release Engineering <releng@fedoraproject.org> - 1:1.7.5-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
+
 * Tue Dec 01 2015 Stephen Gallagher <sgallagh@redhat.com> 1.7.5-1
 - Rebase to 1.7.5 to support Node.js 4.2
 
