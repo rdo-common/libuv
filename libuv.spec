@@ -1,15 +1,15 @@
 
 Name: libuv
 Epoch:   1
-Version: 1.7.5
-Release: 2%{?dist}
+Version: 1.8.0
+Release: 1%{?dist}
 Summary: Platform layer for node.js
 
 Group: System Environment/Libraries
 # the licensing breakdown is described in detail in the LICENSE file
 License: MIT and BSD and ISC
 URL: http://libuv.org/
-Source0: http://libuv.org/dist/v%{version}/%{name}-v%{version}.tar.gz
+Source0: http://dist.libuv.org/dist/v%{version}/libuv-v%{version}.tar.gz
 Source2: libuv.pc.in
 
 BuildRequires: autoconf automake libtool
@@ -62,11 +62,11 @@ rm -f %{buildroot}%{_libdir}/libuv.la
 %postun -p /sbin/ldconfig
 
 %files
-%doc README.md AUTHORS LICENSE
+%doc README.md AUTHORS
+%license LICENSE
 %{_libdir}/libuv.so.*
 
 %files devel
-%doc README.md AUTHORS LICENSE
 %{_libdir}/libuv.so
 %{_libdir}/pkgconfig/libuv.pc
 %{_includedir}/uv*.h
@@ -75,6 +75,9 @@ rm -f %{buildroot}%{_libdir}/libuv.la
 %{_libdir}/libuv.a
 
 %changelog
+* Thu Mar 10 2016 Stephen Gallagher <sgallagh@redhat.com> - 1.8.0-1
+- Rebase to 1.8.0 to support Node.js 5.8
+
 * Thu Feb 04 2016 Fedora Release Engineering <releng@fedoraproject.org> - 1:1.7.5-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
 
